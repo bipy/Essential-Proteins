@@ -103,7 +103,7 @@ void help() {
     printf("Use '-b -c' together (save 50%% time)\n\n");
     printf("============ About ============\n\n");
     printf("Author: bipy@GitHub\n");
-    printf("Version: 20200707.2\n\n");
+    printf("Version: 20200707.3\n\n");
 }
 
 bool cmp(const node &a, const node &b) {
@@ -175,7 +175,7 @@ vector<double> compare_ref(const int step) {
             count++;
         }
         if (i != 0 && i % step == 0) {
-            rt.push_back(count / (double) i);
+            rt.emplace_back(count / (double) i);
         }
     }
     return rt;
@@ -192,6 +192,7 @@ void check(const string &method) {
     }
     sort(ans.begin(), ans.end(), cmp);
     output(ans, compare_ref(100), method);
+    ans.clear();
     cout << method + " complete!" << endl;
 }
 
@@ -220,7 +221,7 @@ void floyd(bool count_path) {
 
 void DC() {
     for (auto &it : m) {
-        ans.push_back(node{it.first, static_cast<double>(it.second.size())});
+        ans.emplace_back(node{it.first, static_cast<double>(it.second.size())});
     }
 }
 
@@ -234,7 +235,7 @@ void CC() {
         for (int j = 0; j < size; j++) {
             sum += matrix[i][j];
         }
-        ans.push_back(node{reverse_trans[i], 10000.0 / sum});
+        ans.emplace_back(node{reverse_trans[i], 10000.0 / sum});
     }
 }
 
@@ -242,6 +243,6 @@ void BC() {
     floyd(true);
     int size = path_count.size();
     for (int i = 0; i < size; i++) {
-        ans.push_back(node{reverse_trans[i], static_cast<double>(path_count[i])});
+        ans.emplace_back(node{reverse_trans[i], static_cast<double>(path_count[i])});
     }
 }
