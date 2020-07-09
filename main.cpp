@@ -7,6 +7,7 @@
 #include <string>
 #include <fstream>
 #include <regex>
+#include <cctype>
 
 using namespace std;
 // data unit
@@ -30,6 +31,7 @@ vector<int> path_count;
 set<string> methods;
 
 string ref_data, input_data;
+int step = 100;
 
 // check and input data
 void init();
@@ -48,7 +50,7 @@ void output(vector<node> &cur, vector<double> rate, const string &method);
 
 // compare with reference data
 // int step: step of comparison result
-vector<double> compare_ref(int step);
+vector<double> compare_ref();
 
 // BC: count pass through between "start" and "end"
 void get_path_count(const int &start, const int &end);
@@ -93,14 +95,27 @@ int main(int argc, char **argv) {
         } else if (cur == "-a") {
             methods.insert("ALL");
         } else if (cur == "-r") {
-            if (i + 1 < argc) {
+            if (i + 1 < argc && argv[i + 1][0] != '-') {
                 ref_data = argv[i + 1];
                 i++;
             }
         } else if (cur == "-i") {
-            if (i + 1 < argc) {
+            if (i + 1 < argc && argv[i + 1][0] != '-') {
                 input_data = argv[i + 1];
                 i++;
+            }
+        } else if (cur == "-s") {
+            if (i + 1 < argc && argv[i + 1][0] != '-') {
+                bool flag = true;
+                for (auto &it : string(argv[i + 1])) {
+                    if (!isdigit(it)) {
+                        flag = false;
+                    }
+                }
+                if (flag) {
+                    step = stoi(argv[i+1]);
+                    i++;
+                }
             }
         } else {
             cout << "Unknown arg: " + cur << endl;
@@ -127,6 +142,7 @@ void help() {
     printf("-h See this.\n");
     printf("-i Specific input data path.\n");
     printf("-r Specific reference data path.\n");
+    printf("-s (optional) Specific step (default 100).\n");
     printf("-a Use 4 centrality algorithms together (BC, CC, DC, EC).\n");
     printf("-b Use algorithm Betweenness Centrality (BC).\n");
     printf("-c Use algorithm Closeness Centrality (CC).\n");
@@ -141,7 +157,7 @@ void help() {
     printf("Use '-b -c' together (save you 50%% time)\n\n");
     printf("============ About ============\n\n");
     printf("Author: bipy@GitHub\n");
-    printf("Version: 20200707.4\n\n");
+    printf("Version: 20200709.1\n\n");
 }
 
 bool cmp(const node &a, const node &b) {
@@ -198,7 +214,7 @@ void output(vector<node> &cur, vector<double> rate, const string &method) {
     string dest = input_data.substr(0, input_data.size() - 4) + " output_" + method + ".txt";
     ofstream ans_out(dest, ios::out);
     for (int i = 0; i < rate.size(); i++) {
-        ans_out << (i + 1) * 100 << " " << rate[i] << endl;
+        ans_out << (i + 1) * step << " " << rate[i] << endl;
     }
     ans_out << endl;
     for (auto &it : cur) {
@@ -207,7 +223,7 @@ void output(vector<node> &cur, vector<double> rate, const string &method) {
     ans_out.close();
 }
 
-vector<double> compare_ref(const int step) {
+vector<double> compare_ref() {
     vector<double> rt;
     int count = 0;
     for (int i = 0; i < ans.size(); i++) {
@@ -242,7 +258,7 @@ void check(const string &method) {
         EC();
     }
     sort(ans.begin(), ans.end(), cmp);
-    output(ans, compare_ref(100), method);
+    output(ans, compare_ref(), method);
     ans.clear();
     printf("%s complete!\n\n", method.c_str());
 }

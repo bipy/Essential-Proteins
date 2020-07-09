@@ -9,6 +9,7 @@ Usage: [option] [value]
 -h See this.
 -i Specific input data path.
 -r Specific reference data path.
+-s (optional) Specific step (default 100).
 -a Use 4 centrality algorithms together (BC, CC, DC, EC).
 -b Use algorithm Betweenness Centrality (BC).
 -c Use algorithm Closeness Centrality (CC).
@@ -29,10 +30,10 @@ Use '-b -c' together (save you 50% time)
 ============ About ============
 
 Author: bipy@GitHub
-Version: 20200707.4
+Version: 20200709.1
 ```
 
-**BC** and **CC** use "floyd" algorithm to calculate all the vertex, this precedure might take hours.
+**BC** and **CC** use "floyd" algorithm to calculate all the vertex, this precedure might take some time.
 
 Luckily they share the same result of floyd, so use **'-b'** and **'-c'** together and gain a tea time : )
 
@@ -48,5 +49,11 @@ Run 4 algorithms together!
 
 ```shell
 Center_Protein.exe -a -r "Refenence essential proteins.txt" -i "original dip.txt"
+```
+
+Run 4 algorithms together and specific step:
+
+```shell
+Center_Protein.exe -a -s 50 -r "Refenence essential proteins.txt" -i "original dip.txt"
 ```
 
