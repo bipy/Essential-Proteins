@@ -10,15 +10,16 @@ Usage: [option] [value]
 -i Specific input data path.
 -r Specific reference data path.
 -s (optional) Specific step (default 100).
--a Use 4 centrality algorithms together (BC, CC, DC, EC).
+-a Use 5 centrality algorithms together (BC, CC, DC, EC, DC_P).
 -b Use algorithm Betweenness Centrality (BC).
 -c Use algorithm Closeness Centrality (CC).
 -d Use algorithm Degree Centrality (DC).
 -e Use algorithm Eigenvector Centrality (EC).
+-p Use algorithm Degree Centrality with p-value (DC_P).
 
 =========== Caution ===========
 
-Must have at least one of ['-a', '-b', '-c', '-d', '-e'].
+Must have at least one of ['-a', '-b', '-c', '-d', '-e', '-p'].
 Must have '-r' and 'your refer data's path'.
 Must have '-i' and  'your input data's path'.
 
@@ -30,12 +31,22 @@ Use '-b -c' together (save you 50% time)
 ============ About ============
 
 Author: bipy@GitHub
-Version: 20200709.1
+Version: 20200721.1
 ```
 
 **BC** and **CC** use "floyd" algorithm to calculate all the vertex, this precedure might take some time.
 
 Luckily they share the same result of floyd, so use **'-b'** and **'-c'** together and gain a tea time : )
+
+# DC_P
+
+![](https://cdn.jsdelivr.net/gh/bipy/CDN@master/repo/Essential-Proteins/dcp.png)
+
+# Build
+
+Require `gmp 6.20`
+
+
 
 # Sample
 
@@ -45,13 +56,13 @@ Run DC and EC!
 Center_Protein.exe -d -e -r "Refenence essential proteins.txt" -i "original dip.txt"
 ```
 
-Run 4 algorithms together!
+Run 5 algorithms together!
 
 ```shell
 Center_Protein.exe -a -r "Refenence essential proteins.txt" -i "original dip.txt"
 ```
 
-Run 4 algorithms together and specific step:
+Run 5 algorithms together and specific step!
 
 ```shell
 Center_Protein.exe -a -s 50 -r "Refenence essential proteins.txt" -i "original dip.txt"
