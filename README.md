@@ -31,7 +31,7 @@ Use '-b -c' together (save you 50% time)
 ============ About ============
 
 Author: bipy@GitHub
-Version: 20200722.1
+Version: 20200723.1
 ```
 
 **BC** and **CC** use "floyd" algorithm to calculate all the vertex, this precedure might take some time.
