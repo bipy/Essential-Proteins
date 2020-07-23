@@ -70,6 +70,9 @@ double get_log_comb(unsigned int N, unsigned int r);
 // return nCr(N,r)
 unsigned int get_exact_comb(unsigned int N, unsigned int r);
 
+// vector normalization
+double normalize(vector<double> &v);
+
 // Algorithm: Significance-Based Essential Protein Discovery
 void SigEP();
 
@@ -180,7 +183,7 @@ void help() {
     printf("Use '-b -c' together (save you 50%% time)\n\n");
     printf("============ About ============\n\n");
     printf("Author: bipy@GitHub\n");
-    printf("Version: 20200722.1\n\n");
+    printf("Version: 20200723.1\n\n");
 }
 
 bool cmp_less(const node &a, const node &b) {
@@ -296,6 +299,7 @@ void check(const string &method) {
 }
 
 void floyd(bool count_path) {
+    // trans adjacent list to matrix
     trans_matrix(INT16_MAX);
     int size = matrix.size();
     if (count_path) {
@@ -331,6 +335,7 @@ double get_log_comb(unsigned int N, unsigned int r) {
     if (N < r) {
         return get_log_comb(r, N);
     }
+    // nCr(N,r) = N! / r! / (N - r)!
     return get_log_fac(N) - get_log_fac(r) - get_log_fac(N - r);
 }
 
@@ -338,19 +343,49 @@ unsigned int get_exact_comb(unsigned int N, unsigned int r) {
     return lround(exp2(get_log_comb(N, r)));
 }
 
+double normalize(vector<double> &v) {
+    double sum = 0.0;
+    for (auto &it:v) {
+        sum += it;
+    }
+    sum = sqrt(sum);
+    for (auto &it:v) {
+        it /= sum;
+    }
+    return sum;
+}
 
 void EC() {
+    // trans adjacent list to matrix
     trans_matrix(-1);
     int size = matrix.size();
+    // Eigenvector
+    vector<double> cur(size, -1), last(size, -1);
     for (int i = 0; i < size; i++) {
-        double l = 0.0;
-        for (auto &j:matrix[i]) {
-            if (j != -1) {
-                l += static_cast<double>(m[reverse_trans[j]].size()) * j;
+        cur[i] = double(m[reverse_trans[i]].size());
+    }
+    double V_cur = 0.1, V_last = 0.0;
+    // travel until V_cur == V_last
+    while (fabs(V_cur - V_last) > 0.000001) {
+        last = cur;
+        V_last = V_cur;
+        // foreach row
+        for (int i = 0; i < size; i++) {
+            cur[i] = 0.0;
+            // foreach col of row i
+            for (int j = 0; j < size; j++) {
+                if (matrix[i][j] != -1) {
+                    cur[i] += last[j] * matrix[i][j];
+                }
             }
         }
-        // push into ans
-        ans.emplace_back(node{reverse_trans[i], l});
+        // normalize cur
+        V_cur = normalize(cur);
+    }
+    // push into ans
+    for (int i = 0; i < size; i++) {
+        ans.emplace_back(node{reverse_trans[i], cur[i]});
+        //printf("%s %f\n", reverse_trans[i].c_str(), cur[i]);
     }
     // descending sort
     sort(ans.begin(), ans.end(), cmp_greater);
@@ -411,26 +446,20 @@ void SigEP() {
      *  To ensure C_N_2 is less than 0xffffffffU
      *  N must be less than about 92,000
      */
-
     // N: the number of vertexes
     // M: the number of edges
     unsigned int N = m.size(), M = 0;
-
     // calc M
     for (auto &it : m) {
         M += it.second.size();
     }
     M /= 2;
-
     // init log_fac: log(0!) = 0.0
     log_fac.push_back(0.0);
-
     // C_N_2: nCr(N,2)
     unsigned int C_N_2 = get_exact_comb(N, 2);
-
     // de: log(denominator (pi))
     double de = get_log_comb(C_N_2, M);
-
     // foreach vertex
     for (auto &it : m) {
         // p: log(pi)
