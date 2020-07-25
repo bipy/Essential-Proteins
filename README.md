@@ -5,11 +5,11 @@ Use **'-h'** to show:
 ```
 ===== Center Protein Calc =====
 
-Usage: [option] [value]
+Usage: [option] <value>
 -h See this.
 -i Specific input data path.
 -r Specific reference data path.
--s (optional) Specific step (default 100).
+-s (optional) Specific step (default 1).
 -a Use 5 centrality algorithms together (BC, CC, DC, EC, SigEP).
 -b Use algorithm Betweenness Centrality (BC).
 -c Use algorithm Closeness Centrality (CC).
@@ -31,7 +31,7 @@ Use '-b -c' together (save you 50% time)
 ============ About ============
 
 Author: bipy@GitHub
-Version: 20200723.1
+Version: 20200725.1
 ```
 
 **BC** and **CC** use "floyd" algorithm to calculate all the vertex, this precedure might take some time.
@@ -63,18 +63,18 @@ Liu, Y., Liang, H., Zou, Q., & He, Z. (2020). Significance-Based Essential Prote
 Run DC and EC!
 
 ```shell
-Center_Protein.exe -d -e -r "Reference essential proteins.txt" -i "original dip.txt"
+Essential-Proteins.exe -d -e -r "Reference essential proteins.txt" -i "original dip.txt"
 ```
 
 Run 5 algorithms together!
 
 ```shell
-Center_Protein.exe -a -r "Reference essential proteins.txt" -i "original dip.txt"
+Essential-Proteins.exe -a -r "Reference essential proteins.txt" -i "original dip.txt"
 ```
 
 Run 5 algorithms together and specific step!
 
 ```shell
-Center_Protein.exe -a -s 5 -r "Reference essential proteins.txt" -i "original dip.txt"
+Essential-Proteins.exe -a -s 5 -r "Reference essential proteins.txt" -i "original dip.txt"
 ```
 

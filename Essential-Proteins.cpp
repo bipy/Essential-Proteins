@@ -36,7 +36,7 @@ set<string> methods;
 
 string ref_data, input_data;
 // step of comparison result
-int step = 100;
+int step = 1;
 
 // check and input data
 bool init();
@@ -163,11 +163,11 @@ int main(int argc, char **argv) {
 
 void help() {
     printf("===== Center Protein Calc =====\n\n");
-    printf("Usage: [option] [value]\n");
+    printf("Usage: [option] <value>\n");
     printf("-h See this.\n");
     printf("-i Specific input data path.\n");
     printf("-r Specific reference data path.\n");
-    printf("-s (optional) Specific step (default 100).\n");
+    printf("-s (optional) Specific step (default 1).\n");
     printf("-a Use 5 centrality algorithms together (BC, CC, DC, EC, SigEP).\n");
     printf("-b Use algorithm Betweenness Centrality (BC).\n");
     printf("-c Use algorithm Closeness Centrality (CC).\n");
@@ -183,7 +183,7 @@ void help() {
     printf("Use '-b -c' together (save you 50%% time)\n\n");
     printf("============ About ============\n\n");
     printf("Author: bipy@GitHub\n");
-    printf("Version: 20200723.1\n\n");
+    printf("Version: 20200725.1\n\n");
 }
 
 bool cmp_less(const node &a, const node &b) {
@@ -360,10 +360,7 @@ void EC() {
     trans_matrix(-1);
     int size = matrix.size();
     // Eigenvector
-    vector<double> cur(size, -1), last(size, -1);
-    for (int i = 0; i < size; i++) {
-        cur[i] = double(m[reverse_trans[i]].size());
-    }
+    vector<double> cur(size, 1), last(size, 1);
     double V_cur = 0.1, V_last = 0.0;
     // travel until V_cur == V_last
     while (fabs(V_cur - V_last) > 0.000001) {
@@ -385,7 +382,6 @@ void EC() {
     // push into ans
     for (int i = 0; i < size; i++) {
         ans.emplace_back(node{reverse_trans[i], cur[i]});
-        //printf("%s %f\n", reverse_trans[i].c_str(), cur[i]);
     }
     // descending sort
     sort(ans.begin(), ans.end(), cmp_greater);
