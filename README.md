@@ -1,3 +1,28 @@
+
+
+This program aims to find out the essential proteins in the Protein Network and evaluate its accuracy by comparing with prepared reference data.
+
+**As a sample, we use 5 algorithms which are shown below:**
+
+- Betweenness Centrality (BC)
+- Closeness Centrality (CC)
+- Degree Centrality (DC)
+- Eigenvector Centrality (EC)
+- Significance-Based Essential Protein Discovery (SigEP) \*
+
+**And 4 data sets:**
+
+| Network | Proteins | Interactions | Density |
+| :-----: | :------: | :----------: | :-----: |
+|   DIP   |   5093   |    24743     | 0.0019  |
+|  MIPS   |   4546   |    12319     | 0.0012  |
+| Krogan  |   2674   |     7075     | 0.0020  |
+|  Gavin  |   1430   |     6531     | 0.0064  |
+
+As a result of various experiment, it indicates that there is no "best" algorithm but a "better suitable" one.
+
+**Details are shown in the last part.**
+
 # Help
 
 Use **'-h'** to show:
@@ -38,7 +63,7 @@ Version: 20200725.1
 
 Luckily they share the same result of floyd, so use **'-b'** and **'-c'** together and gain a tea time : )
 
-# About SigEP
+# \*About SigEP
 
 ## Introduction
 
@@ -48,15 +73,29 @@ SigEP can identity the essential proteins from Protein-Protein Interaction netwo
 
 Liu, Y., Liang, H., Zou, Q., & He, Z. (2020). Significance-Based Essential Protein Discovery. *IEEE/ACM Transactions on Computational Biology and Bioinformatics*.
 
-## Calculate p_i
+## Calculate
 
 ![](https://cdn.jsdelivr.net/gh/bipy/CDN@master/repo/Essential-Proteins/p.png)
 
+Where *Ci* repersents the local clustering coefficient of the *i* th node, which is defined as:
+
 ![](https://cdn.jsdelivr.net/gh/bipy/CDN@master/repo/Essential-Proteins/c.png)
+
+*d* is the degree of the node and *e* is the  number of edges among the *d* neighbors of the node.
+
+And *beta*, the upper bound:
 
 ![](https://cdn.jsdelivr.net/gh/bipy/CDN@master/repo/Essential-Proteins/beta.png)
 
+# Build
 
+**Requirement:** G++ 6.5.0 or higher (No third party library included)
+
+**Command:**
+
+```shell
+g++ Essential-Proteins.cpp -std=c++14 -o Essential-Proteins.exe
+```
 
 # Usage
 
@@ -78,3 +117,20 @@ Run 5 algorithms together and specific step!
 Essential-Proteins.exe -a -s 5 -r "Reference essential proteins.txt" -i "original dip.txt"
 ```
 
+# Result
+
+## DIP
+
+![](https://cdn.jsdelivr.net/gh/bipy/CDN@master/repo/Essential-Proteins/DIP.png)
+
+## MIPS
+
+![](https://cdn.jsdelivr.net/gh/bipy/CDN@master/repo/Essential-Proteins/MIPS.png)
+
+## Krogan
+
+![](https://cdn.jsdelivr.net/gh/bipy/CDN@master/repo/Essential-Proteins/Krogan.png)
+
+## Gavin
+
+![](https://cdn.jsdelivr.net/gh/bipy/CDN@master/repo/Essential-Proteins/Gavin.png)
