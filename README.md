@@ -75,17 +75,17 @@ Liu, Y., Liang, H., Zou, Q., & He, Z. (2020). Significance-Based Essential Prote
 
 ## Calculate
 
-![](https://cdn.jsdelivr.net/gh/bipy/CDN@master/repo/Essential-Proteins/p.png)
+![](assets/p.png)
 
 Where *Ci* repersents the local clustering coefficient of the *i* th node, which is defined as:
 
-![](https://cdn.jsdelivr.net/gh/bipy/CDN@master/repo/Essential-Proteins/c.png)
+![](assets/c.png)
 
 *d* is the degree of the node and *e* is the  number of edges among the *d* neighbors of the node.
 
 And *beta*, the upper bound:
 
-![](https://cdn.jsdelivr.net/gh/bipy/CDN@master/repo/Essential-Proteins/beta.png)
+![](assets/beta.png)
 
 # Build
 
@@ -121,16 +121,16 @@ Essential-Proteins.exe -a -s 5 -r "Reference essential proteins.txt" -i "origina
 
 ## DIP
 
-![](https://cdn.jsdelivr.net/gh/bipy/CDN@master/repo/Essential-Proteins/DIP.png)
+![](assets/DIP.png)
 
 ## MIPS
 
-![](https://cdn.jsdelivr.net/gh/bipy/CDN@master/repo/Essential-Proteins/MIPS.png)
+![](assets/MIPS.png)
 
 ## Krogan
 
-![](https://cdn.jsdelivr.net/gh/bipy/CDN@master/repo/Essential-Proteins/Krogan.png)
+![](assets/Krogan.png)
 
 ## Gavin
 
-![](https://cdn.jsdelivr.net/gh/bipy/CDN@master/repo/Essential-Proteins/Gavin.png)
+![](assets/Gavin.png)
