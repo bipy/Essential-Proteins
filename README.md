@@ -1,6 +1,6 @@
 
 
-This program aims to find out the essential proteins in the Protein Network and evaluate its accuracy by comparing with prepared reference data.
+This program aims to find out the essential proteins in the Protein Network and evaluate its accuracy by comparing with prepared reference data. 
 
 **As a sample, we use 5 algorithms which are shown below:**
 
